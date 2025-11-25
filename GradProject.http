@@ -1,0 +1,63 @@
+@GradProject_HostAddress = http://localhost:5031
+@ContentType = application/json
+
+### Register as Patient
+POST {{GradProject_HostAddress}}/api/auth/register/patient
+Content-Type: {{ContentType}}
+
+{
+  "email": "patient@example.com",
+  "password": "Patient123!",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phoneNumber": "+1234567890",
+  "dateOfBirth": "1990-01-15",
+  "address": "123 Main St, City, State"
+}
+
+### Register as Doctor
+POST {{GradProject_HostAddress}}/api/auth/register/doctor
+Content-Type: {{ContentType}}
+
+{
+  "email": "doctor@example.com",
+  "password": "Doctor123!",
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "phoneNumber": "+1234567891",
+  "specialization": "Cardiology",
+  "licenseNumber": "MD12345",
+  "hospital": "City General Hospital"
+}
+
+### Login as Patient
+POST {{GradProject_HostAddress}}/api/auth/login/patient
+Content-Type: {{ContentType}}
+
+{
+  "email": "patient@example.com",
+  "password": "Patient123!"
+}
+
+### Login as Doctor
+POST {{GradProject_HostAddress}}/api/auth/login/doctor
+Content-Type: {{ContentType}}
+
+{
+  "email": "doctor@example.com",
+  "password": "Doctor123!"
+}
+
+### Get All Patients
+GET {{GradProject_HostAddress}}/api/patients
+Accept: application/json
+
+### Get All Doctors
+GET {{GradProject_HostAddress}}/api/doctors
+Accept: application/json
+
+### Get User by User ID - Returns Patient or Doctor data based on user role
+GET {{GradProject_HostAddress}}/api/users/1
+Accept: application/json
+
+###

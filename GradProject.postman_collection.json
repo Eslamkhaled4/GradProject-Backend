@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "grad-project-auth-collection",
+		"name": "GradProject - Authentication API",
+		"description": "Collection for testing Patient and Doctor authentication endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Patient Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"patient_token\", jsonData.token);",
+							"    pm.environment.set(\"patient_email\", jsonData.email);",
+							"    pm.environment.set(\"patient_userId\", jsonData.userId);",
+							"    console.log(\"Patient registered successfully!\");",
+							"    console.log(\"Token saved to environment\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"patient@example.com\",\n  \"password\": \"Patient123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phoneNumber\": \"+1234567890\",\n  \"dateOfBirth\": \"1990-01-15\",\n  \"address\": \"123 Main St, City, State\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/register/patient",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register",
+						"patient"
+					]
+				},
+				"description": "Register a new patient account. All patient data will be saved to the database."
+			},
+			"response": []
+		},
+		{
+			"name": "Patient Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"patient_token\", jsonData.token);",
+							"    pm.environment.set(\"patient_email\", jsonData.email);",
+							"    pm.environment.set(\"patient_userId\", jsonData.userId);",
+							"    console.log(\"Patient logged in successfully!\");",
+							"    console.log(\"Token saved to environment\");",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has token\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('token');",
+							"    pm.expect(jsonData).to.have.property('email');",
+							"    pm.expect(jsonData).to.have.property('role', 'Patient');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"patient@example.com\",\n  \"password\": \"Patient123!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login/patient",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login",
+						"patient"
+					]
+				},
+				"description": "Login as a patient. Uses saved credentials from database."
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"doctor_token\", jsonData.token);",
+							"    pm.environment.set(\"doctor_email\", jsonData.email);",
+							"    pm.environment.set(\"doctor_userId\", jsonData.userId);",
+							"    console.log(\"Doctor registered successfully!\");",
+							"    console.log(\"Token saved to environment\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"doctor@example.com\",\n  \"password\": \"Doctor123!\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"phoneNumber\": \"+1234567891\",\n  \"specialization\": \"Cardiology\",\n  \"licenseNumber\": \"MD12345\",\n  \"hospital\": \"City General Hospital\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/register/doctor",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register",
+						"doctor"
+					]
+				},
+				"description": "Register a new doctor account. All doctor data will be saved to the database."
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"doctor_token\", jsonData.token);",
+							"    pm.environment.set(\"doctor_email\", jsonData.email);",
+							"    pm.environment.set(\"doctor_userId\", jsonData.userId);",
+							"    console.log(\"Doctor logged in successfully!\");",
+							"    console.log(\"Token saved to environment\");",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has token\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('token');",
+							"    pm.expect(jsonData).to.have.property('email');",
+							"    pm.expect(jsonData).to.have.property('role', 'Doctor');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"doctor@example.com\",\n  \"password\": \"Doctor123!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login/doctor",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login",
+						"doctor"
+					]
+				},
+				"description": "Login as a doctor. Uses saved credentials from database."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Patients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{patient_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/patients",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"patients"
+					]
+				},
+				"description": "Get all registered patients."
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by User ID (Patient or Doctor)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/{{patient_userId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{patient_userId}}"
+					]
+				},
+				"description": "Get user data by user ID. Returns patient data if user is a patient, or doctor data if user is a doctor. Works with any user ID - automatically detects if it's a patient or doctor."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Doctors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{doctor_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/doctors",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"doctors"
+					]
+				},
+				"description": "Get all registered doctors."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5031",
+			"type": "string"
+		}
+	]
+}
+
